@@ -48,8 +48,8 @@
 struct DriveMotor { uint8_t ledcChan, pwmPin, dirPin; };
 
 static const DriveMotor DM[] = {
-    {0, 33, 32},  // M1 — Strafe axis (left/right)
-    {1, 26, 25},  // M2 — Forward/backward axis
+    {0, 32, 33},  // M1 — Strafe axis (left/right)
+    {1, 25, 26},  // M2 — Forward/backward axis
     {2, 23, 22},  // M3 — Strafe axis (left/right)
     {3, 17, 16},  // M4 — Forward/backward axis
 };
@@ -227,7 +227,7 @@ void processGamepad(ControllerPtr ctl) {
   // ── Read sticks ──
   float fwdBwd = -applyDeadzone(ctl->axisRY(), JOYSTICK_DEADZONE);  // R-stick Y: up = forward (+)
   float strafe =  applyDeadzone(ctl->axisRX(), JOYSTICK_DEADZONE);  // R-stick X: right = strafe right (+)
-  float rotate =  applyDeadzone(ctl->axisX(),  JOYSTICK_DEADZONE);  // L-stick X: right = CW (+)
+  float rotate = -applyDeadzone(ctl->axisX(),  JOYSTICK_DEADZONE);  // L-stick X: right = CW (+) (INVERTED)
 
   // ── Diamond Omni Mixing ──
   // If a motor runs the wrong way, flip its sign below (e.g. change + to -)
