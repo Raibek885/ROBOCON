@@ -48,8 +48,8 @@
 struct DriveMotor { uint8_t ledcChan, pwmPin, dirPin; };
 
 static const DriveMotor DM[] = {
-    {0, 32, 33},  // M1 — Strafe axis (left/right)
-    {1, 25, 26},  // M2 — Forward/backward axis
+    {0, 33, 32},  // M1 — Strafe axis (left/right)
+    {1, 26, 25},  // M2 — Forward/backward axis
     {2, 23, 22},  // M3 — Strafe axis (left/right)
     {3, 17, 16},  // M4 — Forward/backward axis
 };
@@ -231,8 +231,8 @@ void processGamepad(ControllerPtr ctl) {
 
   // ── Diamond Omni Mixing ──
   // If a motor runs the wrong way, flip its sign below (e.g. change + to -)
-  float m1 =  strafe + rotate;     // M1 — strafe axis
-  float m2 =  fwdBwd + rotate;     // M2 — fwd/bwd axis
+  float m1 = -(strafe + rotate);   // M1 — strafe axis  (INVERTED: 32/33)
+  float m2 = -(fwdBwd + rotate);   // M2 — fwd/bwd axis (INVERTED: 25/26)
   float m3 =  strafe - rotate;     // M3 — strafe axis (opposite rotation)
   float m4 =  fwdBwd - rotate;     // M4 — fwd/bwd axis (opposite rotation)
 
